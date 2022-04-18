@@ -17,11 +17,12 @@ router.get('/postDetail/:postId', async (req, res) => {
         return;
     }
     const comment = await Comments.find({ postId: postId });
+    const comment1 = comment.reverse();
     const postCommentCnt = comment.length;
 
     res.json({
         post,
-        comment,
+        comment: comment1,
         postCommentCnt,
     });
 });
@@ -70,6 +71,10 @@ router.delete('/commentDelete/:commentId', authMiddleware, async (req, res) => {
         const existsComments = await Comments.find({ _id: commentId });
         if (existsComments.length) {
             await Comments.deleteOne({ _id: commentId });
+        } else {
+            res.status(403).send({
+                errorMessage: '삭제할 후기가 없습니다.',
+            });
         }
         res.status(201).send({
             message: '후기 삭제완료',

@@ -1,7 +1,6 @@
 const express = require('express');
 const Posts = require('../models/post');
 const Comments = require('../models/comment');
-// const Categorys = require('../models/category');
 const router = express.Router();
 const authMiddleware = require('../middlewares/auth-middleware');
 const upload = require('../S3/s3');
@@ -53,8 +52,8 @@ router.post(
             date,
             postImg,
             category
-        }); //postTitle로 받을지 다른방법으로 postId를 받을지 생각해봐야할거같다. 그 후에 호스트게시물과 관련된 API들을 싹다 바꿔줘야한다.
-        
+        });
+
         res.status(201).send({
             message: '호스트등록!',
         });
